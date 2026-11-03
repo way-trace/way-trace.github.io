@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WayTrace</title>
+<meta name="description" content="An off-the-shelf VLM turns web-map directions into atomic language commands, a trace predictor draws each command in the camera image, and an RL policy follows it, over kilometre-scale routes in Zurich.">
+<link rel="canonical" href="https://way-trace.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="WayTrace: A Map-to-Language-to-Trace Hierarchy for Embodied Urban Navigation">
+<meta property="og:description" content="An off-the-shelf VLM turns web-map directions into atomic language commands, a trace predictor draws each command in the camera image, and an RL policy follows it, over kilometre-scale routes in Zurich.">
+<meta property="og:url" content="https://way-trace.github.io/">
+<meta property="og:image" content="https://way-trace.github.io/assets/clips/hero.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="assets/main.css?v=3">
+<link rel="stylesheet" href="assets/decision.css">
+<link rel="stylesheet" href="assets/results.css">
+</head>
+<body>
+
+<!-- 1. ride-along hero -->
+<header class="hero">
+  <video autoplay muted loop playsinline poster="assets/clips/hero.jpg?v=7"><source src="assets/clips/hero.mp4?v=7" type="video/mp4"></video>
+  <div class="copy">
+    <h1><span id="t-title"></span></h1>
+    <div class="title2" id="t-sub"></div>
+    <div class="authors" id="t-authors"></div>
+    <div class="btns" id="t-links"></div>
+  </div>
+  <div class="scrollhint">scroll ↓</div>
+</header>
+
+<nav class="top"><div class="in">
+  <b>WayTrace</b>
+  <a href="#missions">Missions</a><a href="#moments">Moments</a><a href="#hierarchy">Hierarchy</a>
+  <a href="#method">Method</a><a href="#results">Results</a><a href="#demo">Demo</a><a href="#cite">Cite</a>
+</div></nav>
+
+<!-- 2. tl;dr, abstract (the public build adds the summary video above the abstract, tools/build_site.py) -->
+<section id="tldr" class="wide" style="padding-top:48px">
+  <p class="tldr" id="t-tldr"></p>
+</section>
+<section id="summary" class="col" style="padding-top:40px">
+  <div class="video-frame"><video id="summary-video" controls muted playsinline preload="metadata" poster="assets/video/summary.jpg"><source src="assets/video/summary.mp4" type="video/mp4"></video></div>
+</section>
+<script>(() => { const v = document.getElementById("summary-video");
+  v.addEventListener("play", () => { v.dataset.started = "1"; });
+  v.addEventListener("mouseenter", () => { if (!v.dataset.started) v.play().catch(() => {}); }); })();</script>
+<section class="col" style="padding-top:40px">
+  <h2>Abstract</h2>
+  <p class="abstract" id="t-abstract"></p>
+</section>
+
+<!-- 3. mission control -->
+<section id="missions" class="wide">
+  <div class="kicker">Real world · Zurich</div>
+  <h2>Four missions, 2.35 km, one wheeled-legged robot</h2>
+  <p class="sub">Each run is shown with the third-person view, the robot camera with the predicted trace, and every
+    command and reasoning of the orchestrator. The videos run at 5× speed, slow to 2× at highlighted moments and show the
+    arrival in real time. The video starts when the pointer first moves over the player; click a chapter or a marker to jump to it.</p>
+  <div class="console" id="mc">
+    <div class="msel" id="mc-sel"></div>
+    <div class="cbody">
+      <div class="cpanel cplayer">
+        <video id="mc-video" controls muted playsinline preload="metadata"></video>
+        <div class="tl" id="mc-tl"><div class="track" id="mc-track"></div><div class="fill" id="mc-fill"></div></div>
+        <div class="cfoot">
+          <div class="meta" id="mc-meta"></div>
+          <div class="legend">
+            <span style="--c:var(--cmd)">manoeuvre</span><span style="--c:var(--route)">crossing</span>
+            <span style="--c:var(--ok)">arrival</span><span style="--c:var(--robot)">override or stop</span>
+          </div>
+        </div>
+      </div>
+      <div class="cpanel chapters"><h4>Chapters</h4><div class="scroll" id="mc-chs"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. moments -->
+<section id="moments" class="wide">
+  <div class="kicker">Moments</div>
+  <h2>Turns, crossings, construction sites and arrivals</h2>
+  <p class="sub">Short clips from the four missions, each with the command the orchestrator issued. Hover to play, click to enlarge.
+    Each view shows four clips drawn at random; click a category, or the same one again, for others.</p>
+  <div class="chips" id="mo-chips"></div>
+  <div class="mgrid" id="mo-grid"></div>
+</section>
+
+<!-- 5. hierarchy animation -->
+<section id="hierarchy" class="wide">
+  <div class="kicker">One real decision, step by step</div>
+  <h2 style="margin-bottom:32px">How a decision flows through the hierarchy</h2>
+  <div id="decision"></div>
+</section>
+
+<!-- 6. method figures -->
+<section id="method" class="col">
+  <div class="kicker">Method</div>
+  <h2>Map, language, trace</h2>
+  <figure><img src="assets/fig/fig_overview.jpg" alt="Overview of WayTrace"><figcaption>Overview of WayTrace with the logged
+    inputs and outputs of one decision in the Snipes mission. The web map provides the route once, the off-the-shelf
+    orchestrator VLM issues the next atomic command every 2 s, the trace predictor draws it in the current image, and an RL
+    navigation policy follows the trace lifted to 3D.</figcaption></figure>
+  <figure style="margin-top:36px"><img src="assets/fig/fig_dataengine.jpg" alt="Training data"><figcaption>Training data of the
+    trace predictor. Reconstructed Mapillary walks provide real history, and intent-conditioned traces pair one image with
+    several commands. In total 1.19M samples from 182 cities.</figcaption></figure>
+</section>
+
+<!-- 7. results -->
+<section id="results" class="wide">
+  <div class="kicker">Results</div>
+  <h2>What the experiments show</h2>
+  <p class="sub">All numbers are from the paper. Hover a mark for its value, or open the table under each chart.</p>
+  <div id="results-root"></div>
+</section>
+
+<!-- 8. HF demo -->
+<section id="demo" class="wide">
+  <div class="kicker">Try it</div>
+  <h2>Trace predictor demo</h2>
+  <div class="demo" id="demo-box">
+    <div>
+      <p style="margin-top:0">Give the trace predictor a street-level image and an atomic command, and it returns the goal point and
+        the ten-point trace it would send to the robot.</p>
+      <ol class="steps">
+        <li>Upload your own image, or pick one of 50 example images from cities around the world.</li>
+        <li>Type a command such as "Take the left fork" or "Cross the road at the zebra crossing".</li>
+        <li>See the goal and the trace drawn in the image.</li>
+      </ol>
+      <a class="soon" id="demo-link" aria-disabled="true" href="#">Hugging Face Space · coming soon</a>
+    </div>
+    <figure class="demo-preview" id="demo-preview"></figure>
+  </div>
+</section>
+
+<section id="cite" class="col">
+  <h2>BibTeX</h2>
+  <pre class="bib">@misc{patel2026waytrace,
+  title        = {WayTrace: A Map-to-Language-to-Trace Hierarchy for Embodied Urban Navigation},
+  author       = {Patel, Manthan and Frey, Jonas and Roth, Pascal and Hutter, Marco and Cadena, Cesar},
+  howpublished = {\url{https://way-trace.github.io}},
+  year         = {2026}
+}</pre>
+</section>
+<section id="ack" class="col">
+  <h2>Acknowledgments</h2>
+  <p class="abstract">The authors would like to thank Turcan Tuna for help with the state estimation and Claudio Bonaglia, Tim Tschanz and Cyril P&uuml;ntener for help with the real-world deployments. This work was supported by the NVIDIA Academic Grant Program through the project Hierarchical Vision-Language Navigation Foundation Model. It was also supported as part of the Swiss AI Initiative by a grant from the Swiss National Supercomputing Centre (CSCS) under project ID abs19 on Alps, by the Luxembourg National Research Fund (Ref. 18990533) and by the Swiss National Science Foundation (SNSF) through projects No. 200021E_229503 and No. 227617.</p>
+</section>
+<footer>Satellite imagery © swisstopo · Street-level imagery from Mapillary</footer>
+
+<div class="modal" id="modal" role="dialog" aria-label="Video"><button aria-label="Close" onclick="closeModal()">×</button><video id="modal-video" controls playsinline></video></div>
+
+<script src="assets/site.js?v=3"></script>
+<script src="assets/missions.js?v=2"></script>
+<script src="assets/page.js?v=3"></script>
+<script src="assets/decision.js"></script>
+<script src="assets/results.js?v=2"></script>
+</body>
+</html>

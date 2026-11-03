@@ -1,0 +1,56 @@
+/* Results: one block per research question, text on the left and the chart on the right. */
+.rq { display: grid; grid-template-columns: minmax(260px, 340px) minmax(0, 1fr); gap: 36px; padding: 40px 0; border-top: 1px solid var(--line); }
+.rq:first-child { border-top: 0; }
+.rq .q { font: 600 12px var(--mono); color: var(--trace); letter-spacing: .04em; }
+.rq h3 { margin: 4px 0 10px; font-size: 22px; line-height: 1.25; }
+.rq p { color: var(--ink2); margin: 0 0 12px; font-size: 15px; }
+.rq .hero-n { font-size: 48px; font-weight: 600; line-height: 1; color: var(--ink); margin: 10px 0 2px; }
+.rq .hero-l { font-size: 13px; color: var(--muted); }
+.charts { display: grid; gap: 22px; min-width: 0; }
+.charts.three { grid-template-columns: repeat(3, 1fr); }
+.charts.two { grid-template-columns: 1fr 1fr; }
+.chart { min-width: 0; }
+.chart h4 { font-size: 14px; font-weight: 600; margin: 0 0 2px; }
+.chart .cs { font-size: 12.5px; color: var(--muted); margin: 0 0 8px; }
+.chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+.chart svg text { font-family: var(--sans); }
+.chart .ax { font-size: 11px; fill: var(--muted); font-variant-numeric: tabular-nums; }
+.chart .lb { font-size: 12px; fill: var(--ink2); }
+.chart .lb.strong { fill: var(--ink); font-weight: 600; }
+.chart .val { font-size: 12px; fill: var(--ink); font-variant-numeric: tabular-nums; }
+.chart .grp { font-size: 10.5px; fill: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+.chart .hit { fill: transparent; cursor: default; }
+.chart .mark { transition: opacity .15s; }
+.chart .dim .mark { opacity: .35; } .chart .dim .mark.hl { opacity: 1; }
+.legend-row { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12.5px; color: var(--ink2); margin: 0 0 10px; }
+.legend-row span { display: inline-flex; align-items: center; gap: 6px; }
+.legend-row svg { width: 22px; height: 12px; }
+.chart .note, .charts .note { font-size: 12.5px; line-height: 1.5; color: var(--muted); margin: 8px 0 0; max-width: 720px; }
+.tv { margin-top: 6px; }
+.tv summary { cursor: pointer; font-size: 12.5px; color: var(--muted); }
+.tv table { border-collapse: collapse; font-size: 12.5px; margin-top: 6px; width: 100%; }
+.tv th, .tv td { padding: 4px 8px; border-bottom: 1px solid var(--line); text-align: right; font-variant-numeric: tabular-nums; }
+.tv th:first-child, .tv td:first-child { text-align: left; }
+.tv th { color: var(--muted); font-weight: 500; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; margin-bottom: 8px; }
+.seg button { all: unset; cursor: pointer; padding: 5px 12px; font-size: 13px; color: var(--ink2); }
+.seg button.on { background: var(--ink); color: #fff; }
+.seg button:focus-visible { outline: 2px solid var(--trace); }
+.rw-wrap { overflow-x: auto; }
+.rw { border-collapse: collapse; width: 100%; font-size: 14px; }
+.rw th, .rw td { padding: 9px 10px; border-bottom: 1px solid var(--line); text-align: right; font-variant-numeric: tabular-nums; }
+.rw th:first-child, .rw td:first-child { text-align: left; }
+.rw th { color: var(--muted); font-weight: 500; font-size: 12.5px; }
+.rw td small { color: var(--muted); display: block; font-size: 12px; }
+.rw button { all: unset; cursor: pointer; color: var(--route); font-size: 13px; }
+#tip { position: fixed; z-index: 70; pointer-events: none; background: #fff; border: 1px solid var(--line); border-radius: 8px;
+  box-shadow: 0 8px 24px -10px rgba(0,0,0,.3); padding: 8px 10px; font-size: 12.5px; color: var(--ink2); opacity: 0; transition: opacity .1s; min-width: 120px; }
+#tip.on { opacity: 1; }
+#tip .h { color: var(--muted); font-size: 11.5px; margin-bottom: 4px; }
+#tip .r { display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+#tip .r b { color: var(--ink); font-variant-numeric: tabular-nums; }
+#tip .r i { display: inline-block; width: 14px; height: 2px; border-radius: 1px; vertical-align: middle; margin-right: 6px; }
+@media (max-width: 980px) {
+  .rq { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .charts.three, .charts.two { grid-template-columns: minmax(0, 1fr); }
+}
