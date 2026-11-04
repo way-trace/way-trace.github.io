@@ -12,7 +12,7 @@ window.SITE = {
     { label: "Code", soon: true, icon: "code" },
     { label: "Demo", soon: true, icon: "demo" },
     { label: "Dataset", soon: true, icon: "dataset" },
-    { label: "Video", href: "#summary", icon: "video" },
+    { label: "Video", href: "https://www.youtube.com/watch?v=FrujvU8m5mU", icon: "video" },
     { label: "BibTeX", href: "#cite", icon: "bibtex", ghost: true },
   ],
   colors: { route: "#1f9bd7", driven: "#f2c230", command: "#d9731f", trace: "#c2399f", robot: "#e5383b" },
