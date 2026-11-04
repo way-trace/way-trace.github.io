@@ -7,8 +7,8 @@ window.SITE = {
   tldr: "An off-the-shelf VLM turns web-map directions into one atomic command at a time, a trace predictor draws " +
         "the commanded path in the camera image, and an RL policy follows it, over kilometre-scale routes in Zurich.",
   links: [
-    { label: "Paper", soon: true, icon: "pdf" },
-    { label: "arXiv", soon: true, icon: "archive" },
+    { label: "Paper", href: "https://arxiv.org/pdf/2611.05129", icon: "pdf" },
+    { label: "arXiv", href: "https://arxiv.org/abs/2611.05129", icon: "archive" },
     { label: "Code", soon: true, icon: "code" },
     { label: "Demo", soon: true, icon: "demo" },
     { label: "Dataset", soon: true, icon: "dataset" },
